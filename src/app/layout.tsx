@@ -12,12 +12,12 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Isaam Ansari — Head of Engineering",
+  title: "Isaam Ansari",
   description:
-    "Head of Engineering at Trillet AI. Building agentic voice AI for enterprise. Previously Engineering Lead at VECTOR Inc.",
+    "Head of Engineering at Trillet AI. Building agentic voice AI for enterprise.",
   keywords: ["Isaam Ansari", "Engineering", "Trillet AI", "VECTOR", "AI", "Voice AI"],
   openGraph: {
-    title: "Isaam Ansari — Head of Engineering",
+    title: "Isaam Ansari",
     description: "Head of Engineering at Trillet AI. Building agentic voice AI for enterprise.",
     url: "https://isaamansari.com",
     siteName: "Isaam Ansari",
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Isaam Ansari — Head of Engineering",
+    title: "Isaam Ansari",
     description: "Head of Engineering at Trillet AI. Building agentic voice AI for enterprise.",
   },
 };
