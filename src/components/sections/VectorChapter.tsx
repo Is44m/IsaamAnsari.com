@@ -48,7 +48,7 @@ export default function VectorChapter() {
     <div ref={containerRef} style={{ height: "240vh" }}>
       <div
         className="sticky top-0 h-screen-safe flex flex-col justify-center overflow-hidden dot-grid"
-        style={{ background: "#080808" }}
+        style={{ backgroundColor: "#080808" }}
       >
         <div
           className="absolute left-0 top-0 bottom-0 w-[3px]"
