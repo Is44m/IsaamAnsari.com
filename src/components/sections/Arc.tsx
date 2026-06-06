@@ -31,7 +31,7 @@ export default function Arc() {
         animate={inView ? { opacity: 1 } : {}}
         transition={{ duration: 0.6 }}
       >
-        01 — Overview
+        01 - Overview
       </motion.span>
 
       {/* Main paragraph */}
@@ -47,7 +47,7 @@ export default function Arc() {
             From developing AI-centric MVPs at VECTOR to leading the engineering
             division and scaling products that hit national stages
           </span>{" "}
-          — the transition from builder to engineering lead wasn&apos;t planned. It
+          - the transition from builder to engineering lead wasn&apos;t planned. It
           was earned.{" "}
           <span className="text-[#f0f0f0]">Now I&apos;m Head of Engineering at Trillet AI</span>
           {", "}building the agentic voice platform that enterprise clients in

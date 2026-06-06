@@ -108,7 +108,7 @@ export default function TrilletChapter() {
         <div className="section-padding relative z-10 max-w-[900px]">
           {/* Section number + label */}
           <span ref={labelRef} className="label block mb-10 opacity-0">
-            03 — Trillet AI
+            03 - Trillet AI
           </span>
 
           {/* Title */}
@@ -126,7 +126,7 @@ export default function TrilletChapter() {
           <div ref={roleRef} className="flex items-center gap-4 mb-10 opacity-0">
             <div className="h-px w-8 bg-[rgba(99,102,241,0.4)]" />
             <span className="text-[#888] text-sm tracking-wide font-medium uppercase" style={{ letterSpacing: "0.1em" }}>
-              Trillet AI · May 2026 — Present · Remote
+              Trillet AI · May 2026 - Present · Remote
             </span>
           </div>
 

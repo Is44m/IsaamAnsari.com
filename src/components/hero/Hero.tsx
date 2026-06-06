@@ -94,11 +94,7 @@ export default function Hero() {
         >
           <div className="h-px w-12 bg-[rgba(255,255,255,0.2)]" />
           <p className="text-[clamp(0.9rem,1.5vw,1.125rem)] text-[#888] font-normal tracking-wide">
-            Head of Engineering,{" "}
-            <span className="text-[#6366f1] font-medium">Trillet AI</span>
-            <span className="mx-3 text-[#333]">·</span>
-            Engineering Lead,{" "}
-            <span className="text-[#f0f0f0]/70 font-medium">VECTOR Inc.</span>
+            Product &amp; engineering leadership
           </p>
         </motion.div>
       </div>

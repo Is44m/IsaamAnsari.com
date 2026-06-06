@@ -28,7 +28,7 @@ export default function Contact() {
             animate={inView ? { opacity: 1 } : {}}
             transition={{ duration: 0.6 }}
           >
-            04 — Connect
+            04 - Connect
           </motion.span>
 
           <motion.h2
