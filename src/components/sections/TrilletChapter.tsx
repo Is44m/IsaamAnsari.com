@@ -69,7 +69,7 @@ export default function TrilletChapter() {
               style={{ borderColor: "rgba(99,102,241,0.15)", background: "rgba(99,102,241,0.04)" }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/Trillet-logo.png" alt="Trillet AI" style={{ height: "16px", width: "auto", objectFit: "contain", filter: "brightness(0) invert(1)", opacity: 0.6 }} />
+              <img src="/Trillet-logo.png" alt="Trillet AI" style={{ height: "28px", width: "auto", objectFit: "contain" }} />
             </div>
           </div>
 
@@ -109,7 +109,7 @@ export default function TrilletChapter() {
           >
             Joined as Lead Software Engineer in November 2024, contributing to the
             architecture of an agentic AI communication platform with a voice-first
-            focus. Stepped up to Head of Engineering in May 2026 — owning technical
+            focus. Stepped up to Head of Engineering in May 2026, owning technical
             direction, team growth, and the systems that run in production for
             enterprise clients across healthcare, finance, banking, and government.
             Voice-first, built to scale, built to last.
@@ -149,7 +149,7 @@ export default function TrilletChapter() {
                 [1]
               </span>
               <span className="text-xs tracking-wide" style={{ color: "inherit" }}>
-                Featured by Google Cloud — case study on AI-powered telecommunications
+                Featured by Google Cloud - case study on AI-powered telecommunications
               </span>
               <svg
                 className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity -translate-x-1 group-hover:translate-x-0 duration-200"

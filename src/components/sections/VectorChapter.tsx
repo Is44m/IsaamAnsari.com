@@ -72,7 +72,7 @@ export default function VectorChapter() {
               style={{ borderColor: "rgba(255,255,255,0.08)", background: "rgba(255,255,255,0.02)" }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/VECTOR-Logo.png" alt="VECTOR AI" style={{ height: "16px", width: "auto", objectFit: "contain", filter: "brightness(0) invert(1)", opacity: 0.55 }} />
+              <img src="/VECTOR-Logo.png" alt="VECTOR AI" style={{ height: "28px", width: "auto", objectFit: "contain" }} />
             </div>
           </div>
 
@@ -80,11 +80,11 @@ export default function VectorChapter() {
           <h2
             ref={titleRef}
             className="font-bold leading-none tracking-[-0.04em] text-[#f0f0f0] mb-5 opacity-0"
-            style={{ fontSize: "clamp(2.75rem,7.5vw,6rem)" }}
+            style={{ fontSize: "clamp(2rem,5vw,3.75rem)" }}
           >
             Barely an Engineer
             <br />
-            <span className="text-[#6366f1]">- Engineering Lead.</span>
+            <span className="text-[#6366f1]">&#8594;&nbsp;Engineering Lead.</span>
           </h2>
 
           {/* Role progression */}
@@ -100,7 +100,7 @@ export default function VectorChapter() {
             ref={body1Ref}
             className="text-[clamp(0.875rem,1.5vw,1.05rem)] text-[#777] leading-[1.8] max-w-[580px] mb-3 opacity-0"
           >
-            Joined in September 2023 — started building AI MVPs from scratch,
+            Joined in September 2023, started building AI MVPs from scratch,
             working close to clients, figuring out what actually moves the needle.
             As the team and products scaled, so did the scope: leading sprints,
             owning architecture decisions, and keeping quality tight across
@@ -110,7 +110,7 @@ export default function VectorChapter() {
             ref={body2Ref}
             className="text-[clamp(0.875rem,1.5vw,1.05rem)] text-[#777] leading-[1.8] max-w-[580px] mb-8 opacity-0"
           >
-            Also the primary bridge between engineering and clients — project
+            Also the primary bridge between engineering and clients - project
             managing deliverables, maintaining communication, and making sure what
             ships matches what was promised. End-to-end ownership, not just code.
           </p>

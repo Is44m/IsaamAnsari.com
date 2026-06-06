@@ -7,26 +7,36 @@ const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
 function Counter({ target, suffix = "" }: { target: number; suffix?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-10%" });
-  const [count, setCount] = useState(0);
+  const [display, setDisplay] = useState("");
+  const started = useRef(false);
 
   useEffect(() => {
-    if (!inView) return;
-    let frame: number;
-    const start = performance.now();
-    const duration = 1400;
-    const update = (now: number) => {
-      const p = Math.min((now - start) / duration, 1);
-      const eased = 1 - Math.pow(1 - p, 3);
-      setCount(Math.floor(eased * target));
-      if (p < 1) frame = requestAnimationFrame(update);
-      else setCount(target);
-    };
-    frame = requestAnimationFrame(update);
-    return () => cancelAnimationFrame(frame);
-  }, [inView, target]);
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting || started.current) return;
+        started.current = true;
+        io.disconnect();
+        const startTime = performance.now();
+        const duration = 1400;
+        let raf: number;
+        const tick = (now: number) => {
+          const p = Math.min((now - startTime) / duration, 1);
+          const v = Math.round((1 - Math.pow(1 - p, 3)) * target);
+          setDisplay(v > 0 ? `${v}${suffix}` : "");
+          if (p < 1) raf = requestAnimationFrame(tick);
+          else setDisplay(`${target}${suffix}`);
+        };
+        raf = requestAnimationFrame(tick);
+      },
+      { threshold: 0.1 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [target, suffix]);
 
-  return <span ref={ref}>{count}{count > 0 ? suffix : ""}</span>;
+  return <span ref={ref}>{display || <span className="opacity-0">0</span>}</span>;
 }
 
 const stats = [
