@@ -7,6 +7,7 @@ import {
   SiTypescript, SiReact, SiNextdotjs, SiNodedotjs, SiFastify,
   SiPython, SiMongodb, SiRedis, SiDocker, SiTwilio,
   SiStripe, SiAuth0, SiVercel, SiGooglecloud, SiTailwindcss,
+  SiLivekit, SiDatadog, SiOpenai, SiAnthropic, SiLangchain,
 } from "react-icons/si";
 import type { IconType } from "react-icons";
 
@@ -38,11 +39,17 @@ const craftStack: CraftItem[] = [
   { kind: "icon", Icon: SiRedis,       name: "Redis"         },
   { kind: "icon", Icon: SiDocker,      name: "Docker"        },
   { kind: "icon", Icon: SiGooglecloud, name: "Google Cloud"  },
+  { kind: "icon", Icon: SiLivekit,     name: "LiveKit"       },
+  { kind: "icon", Icon: SiDatadog,     name: "Datadog"       },
+  { kind: "icon", Icon: SiOpenai,      name: "OpenAI"        },
+  { kind: "icon", Icon: SiAnthropic,   name: "Anthropic"     },
+  { kind: "icon", Icon: SiLangchain,   name: "LangChain"     },
   { kind: "icon", Icon: SiTwilio,      name: "Twilio"        },
-  // Drop aws.svg, telnyx.svg, inngest.svg into /public — they'll appear automatically
   { kind: "img",  src: "/aws.svg",     name: "AWS"           },
   { kind: "img",  src: "/telnyx.svg",  name: "Telnyx"        },
   { kind: "img",  src: "/inngest.svg", name: "Inngest"       },
+  // Drop northflank.svg into /public when ready
+  { kind: "img",  src: "/northflank.svg", name: "Northflank" },
   { kind: "icon", Icon: SiStripe,      name: "Stripe"        },
   { kind: "icon", Icon: SiAuth0,       name: "Auth0"         },
   { kind: "icon", Icon: SiVercel,      name: "Vercel"        },
