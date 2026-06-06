@@ -75,9 +75,9 @@ export default function TrilletChapter() {
             className="font-bold leading-[1.05] tracking-[-0.035em] text-[#f0f0f0] mb-3 sm:mb-5 opacity-0"
             style={{ fontSize: "clamp(1.75rem,7.5vw,6rem)" }}
           >
-            Head of
+            Lead Software Engineer
             <br />
-            <span className="text-[#6366f1]">Engineering.</span>
+            <span className="text-[#6366f1]">&#8594;&nbsp;Head of Engineering.</span>
           </h2>
 
           <div ref={progressionRef} className="mb-4 sm:mb-7 opacity-0">
@@ -86,13 +86,8 @@ export default function TrilletChapter() {
               <span className="text-[#555] text-xs tracking-[0.1em] uppercase font-medium">Nov 2024 - Present</span>
               <span className="text-[#2a2a2a]">·</span>
               <span className="text-[#555] text-xs tracking-[0.1em] uppercase font-medium">Remote · Abu Dhabi</span>
-            </div>
-            <div className="flex items-center gap-2.5 mt-2 pl-9 flex-wrap">
-              <span className="text-[#3a3a3a] text-xs font-medium">Lead Software Engineer</span>
-              <span className="text-[#2a2a2a] text-xs">-&gt;</span>
-              <span className="text-[#6366f1] text-xs font-semibold tracking-wide">Head of Engineering</span>
-              <span className="text-[#2a2a2a] text-xs">·</span>
-              <span className="text-[#2a2a2a] text-xs">May 2026</span>
+              <span className="text-[#2a2a2a]">·</span>
+              <span className="text-[#444] text-xs tracking-[0.08em] font-medium">HoE from May 2026</span>
             </div>
           </div>
 
