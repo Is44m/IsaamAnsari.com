@@ -32,18 +32,13 @@ export default function Hero() {
 
   return (
     <section className="relative h-screen w-full overflow-hidden flex flex-col justify-between">
-      {/* Particle background */}
       <div className="absolute inset-0 z-0">
         <ParticleField />
       </div>
 
-      {/* Subtle radial glow at bottom */}
       <div
         className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[70vw] h-[50vh] pointer-events-none z-[1]"
-        style={{
-          background:
-            "radial-gradient(ellipse at center bottom, rgba(99,102,241,0.08) 0%, transparent 70%)",
-        }}
+        style={{ background: "radial-gradient(ellipse at center bottom, rgba(99,102,241,0.08) 0%, transparent 70%)" }}
       />
 
       {/* Top bar */}
@@ -55,59 +50,92 @@ export default function Hero() {
         custom={0.1}
       >
         <span className="label">Abu Dhabi, UAE</span>
-        <span className="label">2026</span>
+        <span className="label flex items-center gap-2">
+          <span className="pulse-dot inline-block w-1.5 h-1.5 rounded-full bg-[#6366f1]" />
+          Building @ Trillet AI
+        </span>
       </motion.div>
 
-      {/* Main content */}
-      <div className="relative z-10 px-[clamp(1.5rem,6vw,6rem)] pb-[clamp(4rem,8vw,7rem)]">
-        {/* Name */}
-        <div className="overflow-hidden mb-2">
-          <motion.h1
-            className="font-bold text-[clamp(4.5rem,13vw,11rem)] leading-[0.88] tracking-[-0.04em] text-[#f0f0f0]"
+      {/* Main content + photo — side by side on md+ */}
+      <div className="relative z-10 flex items-end justify-between px-[clamp(1.5rem,6vw,6rem)] pb-[clamp(4rem,8vw,7rem)] gap-8">
+        {/* Left: name + subtitle */}
+        <div className="flex-1 min-w-0">
+          <div className="overflow-hidden mb-2">
+            <motion.h1
+              className="font-bold text-[clamp(4rem,12vw,10rem)] leading-[0.88] tracking-[-0.04em] text-[#f0f0f0]"
+              variants={fadeUp}
+              initial="hidden"
+              animate="show"
+              custom={0.25}
+            >
+              Isaam
+            </motion.h1>
+          </div>
+          <div className="overflow-hidden mb-8">
+            <motion.h1
+              className="font-bold text-[clamp(4rem,12vw,10rem)] leading-[0.88] tracking-[-0.04em] text-[#f0f0f0]"
+              variants={fadeUp}
+              initial="hidden"
+              animate="show"
+              custom={0.35}
+            >
+              Ansari
+            </motion.h1>
+          </div>
+
+          <motion.div
+            className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6"
             variants={fadeUp}
             initial="hidden"
             animate="show"
-            custom={0.25}
+            custom={0.55}
           >
-            Isaam
-          </motion.h1>
-        </div>
-        <div className="overflow-hidden mb-8">
-          <motion.h1
-            className="font-bold text-[clamp(4.5rem,13vw,11rem)] leading-[0.88] tracking-[-0.04em] text-[#f0f0f0]"
-            variants={fadeUp}
-            initial="hidden"
-            animate="show"
-            custom={0.35}
-          >
-            Ansari
-          </motion.h1>
+            <div className="h-px w-12 bg-[rgba(255,255,255,0.2)]" />
+            <p className="text-[clamp(0.85rem,1.4vw,1.05rem)] text-[#888] font-normal tracking-wide">
+              Product &amp; engineering leadership
+            </p>
+          </motion.div>
         </div>
 
-        {/* Divider + role */}
+        {/* Right: photo placeholder — hidden on mobile */}
         <motion.div
-          className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6"
-          variants={fadeUp}
-          initial="hidden"
-          animate="show"
-          custom={0.55}
+          className="hidden lg:block flex-shrink-0"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease, delay: 0.7 }}
         >
-          <div className="h-px w-12 bg-[rgba(255,255,255,0.2)]" />
-          <p className="text-[clamp(0.9rem,1.5vw,1.125rem)] text-[#888] font-normal tracking-wide">
-            Product &amp; engineering leadership
-          </p>
+          <div
+            className="photo-placeholder relative"
+            style={{
+              width: "clamp(140px, 14vw, 200px)",
+              aspectRatio: "3/4",
+              background: "rgba(99,102,241,0.04)",
+              border: "1px dashed rgba(99,102,241,0.2)",
+              borderRadius: "2px",
+            }}
+          >
+            {/* Swap this div for <img src="/photo.jpg" ... /> when ready */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-2">
+              <span className="label text-center" style={{ color: "rgba(99,102,241,0.3)", letterSpacing: "0.2em" }}>
+                PHOTO
+              </span>
+            </div>
+            {/* Indigo bottom accent line */}
+            <div
+              className="absolute bottom-0 left-0 right-0 h-[2px]"
+              style={{ background: "linear-gradient(to right, transparent, rgba(99,102,241,0.4), transparent)" }}
+            />
+          </div>
         </motion.div>
       </div>
 
       {/* Scroll indicator */}
       <div
         ref={scrollIndicatorRef}
-        className="absolute bottom-8 right-[clamp(1.5rem,6vw,6rem)] z-10 flex flex-col items-center gap-2"
+        className="absolute bottom-8 right-[clamp(1.5rem,6vw,6rem)] z-10 lg:hidden flex flex-col items-center gap-2"
       >
-        <span className="label" style={{ writingMode: "vertical-rl", letterSpacing: "0.2em" }}>
-          scroll
-        </span>
-        <div className="w-px h-12 bg-[rgba(255,255,255,0.12)] relative overflow-hidden">
+        <span className="label" style={{ writingMode: "vertical-rl", letterSpacing: "0.2em" }}>scroll</span>
+        <div className="w-px h-10 bg-[rgba(255,255,255,0.1)] relative overflow-hidden">
           <motion.div
             className="absolute top-0 left-0 w-full bg-[rgba(99,102,241,0.6)]"
             initial={{ height: "0%" }}

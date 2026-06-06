@@ -11,12 +11,12 @@ const tags = ["Healthcare", "Finance", "Banking", "Government"];
 export default function TrilletChapter() {
   const containerRef = useRef<HTMLDivElement>(null);
   const labelRef = useRef<HTMLSpanElement>(null);
+  const logoRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const roleRef = useRef<HTMLDivElement>(null);
+  const progressionRef = useRef<HTMLDivElement>(null);
   const bodyRef = useRef<HTMLParagraphElement>(null);
   const tagsRef = useRef<HTMLDivElement>(null);
-  const badgeRef = useRef<HTMLDivElement>(null);
-  const watermarkRef = useRef<HTMLSpanElement>(null);
+  const citationRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -25,133 +25,108 @@ export default function TrilletChapter() {
           trigger: containerRef.current,
           start: "top top",
           end: "bottom bottom",
-          scrub: 1.2,
+          scrub: 1,
         },
       });
 
-      tl.fromTo(
-        watermarkRef.current,
-        { x: "-5%", opacity: 0 },
-        { x: "3%", opacity: 0.04, duration: 2 },
-        0
-      );
-
-      tl.fromTo(
-        labelRef.current,
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 1 },
-        0.1
-      );
-
-      tl.fromTo(
-        titleRef.current,
-        { opacity: 0, y: 50, skewY: 2 },
-        { opacity: 1, y: 0, skewY: 0, duration: 1.5 },
-        0.2
-      );
-
-      tl.fromTo(
-        roleRef.current,
-        { opacity: 0, y: 24 },
-        { opacity: 1, y: 0, duration: 1 },
-        0.7
-      );
-
-      tl.fromTo(
-        bodyRef.current,
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 1 },
-        1.1
-      );
-
-      tl.fromTo(
-        tagsRef.current,
-        { opacity: 0, y: 16 },
-        { opacity: 1, y: 0, duration: 1 },
-        1.5
-      );
-
-      tl.fromTo(
-        badgeRef.current,
-        { opacity: 0, scale: 0.95 },
-        { opacity: 1, scale: 1, duration: 0.8 },
-        1.9
-      );
+      tl.fromTo(labelRef.current, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.8 }, 0);
+      tl.fromTo(logoRef.current, { opacity: 0, x: -12 }, { opacity: 1, x: 0, duration: 0.8 }, 0.1);
+      tl.fromTo(titleRef.current, { opacity: 0, y: 36, skewY: 1 }, { opacity: 1, y: 0, skewY: 0, duration: 1.2 }, 0.15);
+      tl.fromTo(progressionRef.current, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.9 }, 0.6);
+      tl.fromTo(bodyRef.current, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.9 }, 0.9);
+      tl.fromTo(tagsRef.current, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.8 }, 1.2);
+      tl.fromTo(citationRef.current, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.7 }, 1.5);
     }, containerRef);
 
     return () => ctx.revert();
   }, []);
 
   return (
-    <div ref={containerRef} style={{ height: "320vh" }}>
+    <div ref={containerRef} style={{ height: "240vh" }}>
       <div
         className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden"
         style={{ background: "#060608" }}
       >
-        {/* Watermark */}
-        <span
-          ref={watermarkRef}
-          className="absolute right-0 top-1/2 -translate-y-1/2 font-bold text-[#6366f1] select-none pointer-events-none whitespace-nowrap opacity-0"
-          style={{
-            fontSize: "clamp(7rem,20vw,16rem)",
-            letterSpacing: "-0.05em",
-            lineHeight: 1,
-          }}
-          aria-hidden
+        {/* Subtle right gradient bar */}
+        <div
+          className="absolute right-0 top-0 bottom-0 w-[3px]"
+          style={{ background: "linear-gradient(to bottom, transparent, rgba(99,102,241,0.25) 50%, transparent)" }}
+        />
+
+        <div
+          className="relative z-10 flex flex-col justify-center"
+          style={{ padding: "0 clamp(1.5rem,6vw,6rem)", maxWidth: "860px" }}
         >
-          TRILLET
-        </span>
-
-        {/* Right accent bar */}
-        <div className="absolute right-0 top-0 bottom-0 w-px bg-[rgba(99,102,241,0.06)]" />
-
-        <div className="section-padding relative z-10 max-w-[900px]">
-          {/* Section number + label */}
-          <span ref={labelRef} className="label block mb-10 opacity-0">
+          {/* Label */}
+          <span ref={labelRef} className="label block mb-6 opacity-0">
             03 - Trillet AI
           </span>
+
+          {/* Logo placeholder */}
+          <div ref={logoRef} className="mb-6 opacity-0">
+            <div
+              className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded border"
+              style={{ borderColor: "rgba(99,102,241,0.15)", background: "rgba(99,102,241,0.04)" }}
+            >
+              {/* Replace src with actual logo */}
+              {/* <img src="/logos/trillet-ai.svg" alt="Trillet AI" className="h-4 w-auto" /> */}
+              <span className="text-xs text-[#444] tracking-[0.12em] font-medium uppercase">[ TRILLET AI LOGO ]</span>
+            </div>
+          </div>
 
           {/* Title */}
           <h2
             ref={titleRef}
-            className="font-bold leading-none tracking-[-0.04em] text-[#f0f0f0] mb-8 opacity-0"
-            style={{ fontSize: "clamp(3.5rem,9vw,7.5rem)" }}
+            className="font-bold leading-none tracking-[-0.04em] text-[#f0f0f0] mb-5 opacity-0"
+            style={{ fontSize: "clamp(2.75rem,7.5vw,6rem)" }}
           >
             Head of
             <br />
             <span className="text-[#6366f1]">Engineering.</span>
           </h2>
 
-          {/* Role line */}
-          <div ref={roleRef} className="flex items-center gap-4 mb-10 opacity-0">
-            <div className="h-px w-8 bg-[rgba(99,102,241,0.4)]" />
-            <span className="text-[#888] text-sm tracking-wide font-medium uppercase" style={{ letterSpacing: "0.1em" }}>
-              Trillet AI · May 2026 - Present · Remote
-            </span>
+          {/* Role progression */}
+          <div ref={progressionRef} className="mb-7 opacity-0">
+            <div className="flex items-center gap-3 flex-wrap">
+              <div className="h-px w-6 bg-[rgba(99,102,241,0.3)]" />
+              <span className="text-[#555] text-xs tracking-[0.1em] uppercase font-medium">Nov 2024 - Present</span>
+              <span className="text-[#2a2a2a]">·</span>
+              <span className="text-[#555] text-xs tracking-[0.1em] uppercase font-medium">Remote · Abu Dhabi</span>
+            </div>
+            {/* Transition line */}
+            <div className="flex items-center gap-2.5 mt-2.5 pl-9 flex-wrap">
+              <span className="text-[#3a3a3a] text-xs font-medium">Lead Software Engineer</span>
+              <span className="text-[#2a2a2a] text-xs">-&gt;</span>
+              <span className="text-[#6366f1] text-xs font-semibold tracking-wide">Head of Engineering</span>
+              <span className="text-[#2a2a2a] text-xs">·</span>
+              <span className="text-[#2a2a2a] text-xs">May 2026</span>
+            </div>
           </div>
 
-          {/* Body text */}
+          {/* Body */}
           <p
             ref={bodyRef}
-            className="text-[clamp(1rem,1.7vw,1.2rem)] text-[#999] leading-[1.7] max-w-[600px] mb-10 opacity-0"
+            className="text-[clamp(0.875rem,1.5vw,1.05rem)] text-[#777] leading-[1.8] max-w-[580px] mb-8 opacity-0"
           >
-            Building the agentic AI communication platform enterprises trust
-            for their most mission-critical customer conversations. Voice-first,
-            production-grade, and running at scale. The architecture is mine.
-            The roadmap is mine. The chapter is still being written.
+            Joined as Lead Software Engineer in November 2024, contributing to the
+            architecture of an agentic AI communication platform with a voice-first
+            focus. Stepped up to Head of Engineering in May 2026 — owning technical
+            direction, team growth, and the systems that run in production for
+            enterprise clients across healthcare, finance, banking, and government.
+            Voice-first, built to scale, built to last.
           </p>
 
           {/* Industry tags */}
-          <div ref={tagsRef} className="flex flex-wrap gap-2 mb-10 opacity-0">
+          <div ref={tagsRef} className="flex flex-wrap gap-2 mb-7 opacity-0">
             {tags.map((tag) => (
               <span
                 key={tag}
-                className="px-3 py-1.5 rounded-full text-xs font-medium tracking-wide border"
+                className="px-3 py-1 rounded-full text-xs font-medium border"
                 style={{
-                  borderColor: "rgba(99,102,241,0.2)",
-                  color: "#6366f1",
-                  background: "rgba(99,102,241,0.06)",
-                  letterSpacing: "0.08em",
+                  borderColor: "rgba(99,102,241,0.18)",
+                  color: "rgba(99,102,241,0.8)",
+                  background: "rgba(99,102,241,0.05)",
+                  letterSpacing: "0.07em",
                 }}
               >
                 {tag}
@@ -159,20 +134,31 @@ export default function TrilletChapter() {
             ))}
           </div>
 
-          {/* Google Cloud badge */}
-          <div ref={badgeRef} className="opacity-0">
-            <div
-              className="inline-flex items-center gap-3 px-4 py-2.5 rounded-lg border"
-              style={{
-                borderColor: "rgba(255,255,255,0.07)",
-                background: "rgba(255,255,255,0.03)",
-              }}
+          {/* Google Cloud citation */}
+          <div ref={citationRef} className="opacity-0">
+            <a
+              href="https://cloud.google.com" /* Replace with actual article URL */
+              target="_blank"
+              rel="noopener noreferrer"
+              data-cursor-hover
+              className="group inline-flex items-center gap-3 text-[#444] hover:text-[#777] transition-colors duration-300"
             >
-              <div className="w-2 h-2 rounded-full bg-[#6366f1]" />
-              <span className="text-xs text-[#666] font-medium tracking-wide" style={{ letterSpacing: "0.06em" }}>
-                Featured by Google Cloud
+              <span
+                className="text-[0.6rem] tracking-[0.18em] uppercase font-medium"
+                style={{ color: "inherit" }}
+              >
+                [1]
               </span>
-            </div>
+              <span className="text-xs tracking-wide" style={{ color: "inherit" }}>
+                Featured by Google Cloud — case study on AI-powered telecommunications
+              </span>
+              <svg
+                className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity -translate-x-1 group-hover:translate-x-0 duration-200"
+                fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M7 7h10v10" />
+              </svg>
+            </a>
           </div>
         </div>
       </div>

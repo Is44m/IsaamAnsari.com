@@ -19,9 +19,9 @@ export default function Contact() {
     <section ref={ref} className="section-padding relative">
       <span className="rule block mb-16" />
 
-      <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-12">
-        {/* Heading */}
-        <div>
+      <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-12 lg:gap-20">
+        {/* Left: heading + booking CTA */}
+        <div className="flex-1">
           <motion.span
             className="label block mb-6"
             initial={{ opacity: 0 }}
@@ -32,7 +32,7 @@ export default function Contact() {
           </motion.span>
 
           <motion.h2
-            className="font-bold leading-none tracking-[-0.04em] text-[#f0f0f0]"
+            className="font-bold leading-none tracking-[-0.04em] text-[#f0f0f0] mb-10"
             style={{ fontSize: "clamp(3rem,8vw,6.5rem)" }}
             initial={{ opacity: 0, y: 32 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -42,11 +42,51 @@ export default function Contact() {
             <br />
             <span className="text-[#6366f1]">connect.</span>
           </motion.h2>
+
+          {/* Book a session */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, ease, delay: 0.35 }}
+          >
+            <p className="text-[#555] text-sm leading-[1.7] mb-5 max-w-[340px]">
+              Have a project, role, or idea worth talking about? Book a session
+              directly.
+            </p>
+            <a
+              href="https://cal.com/isaama"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-cursor-hover
+              className="group inline-flex items-center gap-3 px-5 py-3 rounded border transition-all duration-300"
+              style={{
+                borderColor: "rgba(99,102,241,0.25)",
+                background: "rgba(99,102,241,0.06)",
+                color: "#6366f1",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "rgba(99,102,241,0.14)";
+                e.currentTarget.style.borderColor = "rgba(99,102,241,0.5)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "rgba(99,102,241,0.06)";
+                e.currentTarget.style.borderColor = "rgba(99,102,241,0.25)";
+              }}
+            >
+              <span className="text-sm font-medium tracking-wide">Book a session</span>
+              <svg
+                className="w-3.5 h-3.5 -translate-x-0.5 group-hover:translate-x-0.5 transition-transform duration-200"
+                fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M7 7h10v10" />
+              </svg>
+            </a>
+          </motion.div>
         </div>
 
-        {/* Links */}
+        {/* Right: links */}
         <motion.div
-          className="flex flex-col gap-5"
+          className="flex flex-col gap-5 lg:pt-[5.5rem]"
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.9, ease, delay: 0.3 }}
@@ -74,12 +114,8 @@ export default function Contact() {
         animate={inView ? { opacity: 1 } : {}}
         transition={{ duration: 0.8, delay: 0.6 }}
       >
-        <span className="text-xs text-[#333] tracking-wide">
-          © 2026 Isaam Ansari
-        </span>
-        <span className="text-xs text-[#222] tracking-wide">
-          isaamansari.com
-        </span>
+        <span className="text-xs text-[#333] tracking-wide">© 2026 Isaam Ansari</span>
+        <span className="text-xs text-[#222] tracking-wide">isaamansari.com</span>
       </motion.div>
     </section>
   );

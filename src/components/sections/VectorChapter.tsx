@@ -6,9 +6,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const highlights = [
-  { value: "Sep '23", label: "Day one" },
-  { value: "~10", label: "Engineers led" },
+const stats = [
+  { value: "~10", label: "Engineers" },
   { value: "3+", label: "Years" },
 ];
 
@@ -16,10 +15,11 @@ export default function VectorChapter() {
   const containerRef = useRef<HTMLDivElement>(null);
   const labelRef = useRef<HTMLSpanElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
-  const roleRef = useRef<HTMLDivElement>(null);
-  const bodyRef = useRef<HTMLParagraphElement>(null);
+  const progressionRef = useRef<HTMLDivElement>(null);
+  const body1Ref = useRef<HTMLParagraphElement>(null);
+  const body2Ref = useRef<HTMLParagraphElement>(null);
   const statsRef = useRef<HTMLDivElement>(null);
-  const watermarkRef = useRef<HTMLSpanElement>(null);
+  const logoRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -28,107 +28,104 @@ export default function VectorChapter() {
           trigger: containerRef.current,
           start: "top top",
           end: "bottom bottom",
-          scrub: 1.2,
+          scrub: 1,
         },
       });
 
-      tl.fromTo(
-        watermarkRef.current,
-        { x: "8%", opacity: 0 },
-        { x: "-2%", opacity: 0.055, duration: 3 },
-        0
-      );
-      tl.fromTo(labelRef.current, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 1 }, 0.1);
-      tl.fromTo(titleRef.current, { opacity: 0, y: 40, skewY: 1.5 }, { opacity: 1, y: 0, skewY: 0, duration: 1.5 }, 0.2);
-      tl.fromTo(roleRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 1 }, 0.8);
-      tl.fromTo(bodyRef.current, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 1 }, 1.2);
-      tl.fromTo(statsRef.current, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.8 }, 1.7);
+      tl.fromTo(labelRef.current, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.8 }, 0);
+      tl.fromTo(logoRef.current, { opacity: 0, x: -12 }, { opacity: 1, x: 0, duration: 0.8 }, 0.1);
+      tl.fromTo(titleRef.current, { opacity: 0, y: 36, skewY: 1 }, { opacity: 1, y: 0, skewY: 0, duration: 1.2 }, 0.15);
+      tl.fromTo(progressionRef.current, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.9 }, 0.6);
+      tl.fromTo(body1Ref.current, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.9 }, 0.9);
+      tl.fromTo(body2Ref.current, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.9 }, 1.1);
+      tl.fromTo(statsRef.current, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.7 }, 1.4);
     }, containerRef);
 
     return () => ctx.revert();
   }, []);
 
   return (
-    <div ref={containerRef} style={{ height: "300vh" }}>
+    <div ref={containerRef} style={{ height: "240vh" }}>
       <div
         className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden"
         style={{ background: "#080808" }}
       >
-        {/* Watermark - positioned to not interfere with content */}
-        <span
-          ref={watermarkRef}
-          className="absolute right-[-8%] top-1/2 -translate-y-1/2 font-bold text-[#f0f0f0] select-none pointer-events-none whitespace-nowrap opacity-0"
-          style={{ fontSize: "clamp(7rem,20vw,16rem)", letterSpacing: "-0.05em", lineHeight: 1 }}
-          aria-hidden
-        >
-          VECTOR
-        </span>
+        {/* Subtle left gradient bar */}
+        <div
+          className="absolute left-0 top-0 bottom-0 w-[3px]"
+          style={{ background: "linear-gradient(to bottom, transparent, rgba(99,102,241,0.3) 50%, transparent)" }}
+        />
 
-        <div className="absolute left-0 top-0 bottom-0 w-px bg-[rgba(255,255,255,0.04)]" />
-
-        {/* Content — constrained height so nothing clips */}
         <div
           className="relative z-10 flex flex-col justify-center"
           style={{ padding: "0 clamp(1.5rem,6vw,6rem)", maxWidth: "860px" }}
         >
-          <span ref={labelRef} className="label block mb-8 opacity-0">
+          {/* Label */}
+          <span ref={labelRef} className="label block mb-6 opacity-0">
             02 - VECTOR AI
           </span>
 
+          {/* Logo placeholder */}
+          <div ref={logoRef} className="mb-6 opacity-0">
+            <div
+              className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded border"
+              style={{ borderColor: "rgba(255,255,255,0.08)", background: "rgba(255,255,255,0.02)" }}
+            >
+              {/* Replace src with actual logo */}
+              {/* <img src="/logos/vector-ai.svg" alt="VECTOR AI" className="h-4 w-auto" /> */}
+              <span className="text-xs text-[#444] tracking-[0.12em] font-medium uppercase">[ VECTOR AI LOGO ]</span>
+            </div>
+          </div>
+
+          {/* Title */}
           <h2
             ref={titleRef}
-            className="font-bold leading-none tracking-[-0.04em] text-[#f0f0f0] mb-6 opacity-0"
-            style={{ fontSize: "clamp(3rem,8vw,6.5rem)" }}
+            className="font-bold leading-none tracking-[-0.04em] text-[#f0f0f0] mb-5 opacity-0"
+            style={{ fontSize: "clamp(2.75rem,7.5vw,6rem)" }}
           >
-            From the
+            Barely an Engineer
             <br />
-            <span className="text-[#6366f1]">beginning.</span>
+            <span className="text-[#6366f1]">- Engineering Lead.</span>
           </h2>
 
           {/* Role progression */}
-          <div ref={roleRef} className="mb-7 opacity-0">
-            <div className="flex items-center gap-3 mb-2">
-              <div className="h-px w-6 bg-[rgba(255,255,255,0.15)]" />
-              <span className="text-[#555] text-xs tracking-[0.12em] uppercase font-medium">
-                Sep 2023 - Present
-              </span>
-            </div>
-            <div className="flex items-center gap-3 pl-9 flex-wrap">
-              <span className="text-[#888] text-sm font-medium">PRD Officer</span>
-              <span className="text-[#333] text-xs">-&gt;</span>
-              <span className="text-[#f0f0f0] text-sm font-semibold">Engineering Lead</span>
-              <span className="text-[#333] mx-1">·</span>
-              <span className="text-[#555] text-xs tracking-wide">Islamabad &amp; Abu Dhabi</span>
-            </div>
+          <div ref={progressionRef} className="flex items-center gap-3 mb-7 opacity-0 flex-wrap">
+            <div className="h-px w-6 bg-[rgba(255,255,255,0.12)]" />
+            <span className="text-[#555] text-xs tracking-[0.1em] uppercase font-medium">Sep 2023 - Present</span>
+            <span className="text-[#2a2a2a] text-xs">·</span>
+            <span className="text-[#555] text-xs tracking-[0.1em] uppercase font-medium">Islamabad &amp; Abu Dhabi</span>
           </div>
 
           {/* Body */}
           <p
-            ref={bodyRef}
-            className="text-[clamp(0.9rem,1.5vw,1.1rem)] text-[#777] leading-[1.75] max-w-[580px] mb-8 opacity-0"
+            ref={body1Ref}
+            className="text-[clamp(0.875rem,1.5vw,1.05rem)] text-[#777] leading-[1.8] max-w-[580px] mb-3 opacity-0"
           >
-            Was there before the stages, the team, and the titles. Started as a
-            product researcher building AI-centric MVPs from nothing, grew into
-            leading the engineering division - sprint ownership, architecture
-            decisions, code quality, and a team of{" "}
-            <span className="text-[#aaa]">~10 engineers</span> shipping across
-            multiple client portfolios. Represented VECTOR AI at GDG DevFest
-            AI, Future Fest, and NUST.
+            Joined in September 2023 — started building AI MVPs from scratch,
+            working close to clients, figuring out what actually moves the needle.
+            As the team and products scaled, so did the scope: leading sprints,
+            owning architecture decisions, and keeping quality tight across
+            multiple concurrent portfolios.
+          </p>
+          <p
+            ref={body2Ref}
+            className="text-[clamp(0.875rem,1.5vw,1.05rem)] text-[#777] leading-[1.8] max-w-[580px] mb-8 opacity-0"
+          >
+            Also the primary bridge between engineering and clients — project
+            managing deliverables, maintaining communication, and making sure what
+            ships matches what was promised. End-to-end ownership, not just code.
           </p>
 
-          {/* Stats - horizontal, never clips */}
-          <div
-            ref={statsRef}
-            className="flex items-center gap-8 opacity-0 flex-wrap"
-          >
-            {highlights.map((h, i) => (
-              <div key={h.label} className="flex items-baseline gap-2">
-                <span className="font-bold text-[1.75rem] leading-none tracking-[-0.04em] text-[#f0f0f0]">
-                  {h.value}
+          {/* Stats */}
+          <div ref={statsRef} className="flex items-center gap-10 opacity-0 flex-wrap">
+            {stats.map((s, i) => (
+              <div key={s.label} className="flex items-baseline gap-2.5">
+                <span className="font-bold text-[1.875rem] leading-none tracking-[-0.04em] text-[#f0f0f0]">
+                  {s.value}
                 </span>
-                <span className="label">{h.label}</span>
-                {i < highlights.length - 1 && (
-                  <span className="ml-4 text-[#222] text-lg">|</span>
+                <span className="label">{s.label}</span>
+                {i < stats.length - 1 && (
+                  <span className="ml-6 text-[#1e1e1e] text-base select-none">|</span>
                 )}
               </div>
             ))}
