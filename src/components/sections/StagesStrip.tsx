@@ -1,7 +1,9 @@
 "use client";
 
-import { useRef, useEffect, useCallback } from "react";
+import { useRef, useCallback } from "react";
 import { motion, useInView } from "framer-motion";
+import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
 import NavButton from "@/components/ui/NavButton";
 
 const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
@@ -28,43 +30,17 @@ const appearances = [
   { name: "NaSCon '25", detail: "Panel moderator for the AI track at the National Solutions Convention", location: "FAST NUCES Islamabad, Pakistan", year: "2025", role: "MODERATOR" as Role },
 ];
 
-const CARD_W = 260;
-const GAP = 12;
-const SPEED = 0.6; // px per frame
-
 export default function StagesStrip() {
   const ref = useRef<HTMLElement>(null);
-  const scrollRef = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-10%" });
-  const raf = useRef<number>(0);
 
-  const animate = useCallback(() => {
-    const el = scrollRef.current;
-    if (el) {
-      el.scrollLeft += SPEED;
-      if (el.scrollLeft >= el.scrollWidth / 2) {
-        el.scrollLeft -= el.scrollWidth / 2;
-      }
-    }
-    raf.current = requestAnimationFrame(animate);
-  }, []);
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    { loop: true, align: "start", dragFree: false },
+    [Autoplay({ delay: 3000, stopOnInteraction: false, stopOnMouseEnter: true })]
+  );
 
-  useEffect(() => {
-    raf.current = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(raf.current);
-  }, [animate]);
-
-  const scroll = (dir: 1 | -1) => {
-    const el = scrollRef.current;
-    if (!el) return;
-    el.scrollLeft += dir * (CARD_W + GAP);
-    // Keep within bounds of doubled list
-    const half = el.scrollWidth / 2;
-    if (el.scrollLeft >= half) el.scrollLeft -= half;
-    if (el.scrollLeft < 0) el.scrollLeft += half;
-  };
-
-  const doubled = [...appearances, ...appearances];
+  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
 
   return (
     <section
@@ -93,66 +69,64 @@ export default function StagesStrip() {
           animate={inView ? { opacity: 1 } : {}}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          <NavButton direction="left"  disabled={false} onClick={() => scroll(-1)} />
-          <NavButton direction="right" disabled={false} onClick={() => scroll(1)}  />
+          <NavButton direction="left"  disabled={false} onClick={scrollPrev} />
+          <NavButton direction="right" disabled={false} onClick={scrollNext} />
         </motion.div>
       </div>
 
-      {/* Scroll container */}
+      {/* Carousel */}
       <motion.div
-        className="relative overflow-hidden"
         initial={{ opacity: 0 }}
         animate={inView ? { opacity: 1 } : {}}
         transition={{ duration: 0.7, delay: 0.15 }}
+        className="relative"
       >
+        {/* Edge fades */}
         <div className="absolute left-0 top-0 bottom-0 w-10 z-10 pointer-events-none"
           style={{ background: "linear-gradient(to right, #080808, transparent)" }} />
         <div className="absolute right-0 top-0 bottom-0 w-10 z-10 pointer-events-none"
           style={{ background: "linear-gradient(to left, #080808, transparent)" }} />
 
-        <div
-          ref={scrollRef}
-          className="flex gap-3 overflow-x-auto pb-2"
-          style={{
-            padding: "0 clamp(1.5rem,6vw,6rem)",
-            scrollbarWidth: "none",
-            WebkitOverflowScrolling: "touch",
-          }}
-        >
-          {doubled.map((a, i) => {
-            const rs = roleStyles[a.role];
-            return (
-              <div
-                key={`${a.name}-${i}`}
-                className="flex-shrink-0 flex flex-col"
-                style={{ width: `${CARD_W}px` }}
-              >
+        {/* Embla viewport */}
+        <div ref={emblaRef} style={{ overflow: "hidden", padding: "0 clamp(1.5rem,6vw,6rem)" }}>
+          {/* Embla container */}
+          <div style={{ display: "flex", gap: "12px" }}>
+            {appearances.map((a) => {
+              const rs = roleStyles[a.role];
+              return (
                 <div
-                  className="photo-placeholder w-full mb-3 relative"
-                  style={{ aspectRatio: "16/10", background: "rgba(255,255,255,0.02)", border: "1px dashed rgba(255,255,255,0.06)", borderRadius: "4px" }}
+                  key={a.name}
+                  style={{ flex: "0 0 260px", minWidth: 0 }}
+                  className="flex flex-col"
                 >
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="label" style={{ color: "rgba(255,255,255,0.07)", letterSpacing: "0.18em" }}>IMAGE</span>
+                  {/* Photo placeholder */}
+                  <div
+                    className="photo-placeholder w-full mb-3 relative"
+                    style={{ aspectRatio: "16/10", background: "rgba(255,255,255,0.02)", border: "1px dashed rgba(255,255,255,0.06)", borderRadius: "4px" }}
+                  >
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <span className="label" style={{ color: "rgba(255,255,255,0.07)", letterSpacing: "0.18em" }}>IMAGE</span>
+                    </div>
+                    <div className="absolute top-2 right-2 px-2 py-0.5 rounded"
+                      style={{ background: "rgba(8,8,8,0.85)", border: "1px solid rgba(255,255,255,0.06)" }}>
+                      <span className="label" style={{ color: "rgba(255,255,255,0.25)", letterSpacing: "0.1em" }}>{a.year}</span>
+                    </div>
                   </div>
-                  <div className="absolute top-2 right-2 px-2 py-0.5 rounded"
-                    style={{ background: "rgba(8,8,8,0.85)", border: "1px solid rgba(255,255,255,0.06)" }}>
-                    <span className="label" style={{ color: "rgba(255,255,255,0.25)", letterSpacing: "0.1em" }}>{a.year}</span>
-                  </div>
+
+                  <span
+                    className="self-start px-2 py-0.5 rounded-full mb-2 text-[0.6rem] font-semibold tracking-[0.1em]"
+                    style={{ color: rs.color, background: rs.bg, border: `1px solid ${rs.border}` }}
+                  >
+                    {a.role}
+                  </span>
+
+                  <p className="text-[#e0e0e0] text-xs font-semibold tracking-[-0.01em] mb-1 leading-snug">{a.name}</p>
+                  <p className="text-[#444] text-xs leading-[1.6] mb-2">{a.detail}</p>
+                  <span className="label" style={{ color: "rgba(255,255,255,0.1)" }}>{a.location}</span>
                 </div>
-
-                <span
-                  className="self-start px-2 py-0.5 rounded-full mb-2 text-[0.6rem] font-semibold tracking-[0.1em]"
-                  style={{ color: rs.color, background: rs.bg, border: `1px solid ${rs.border}` }}
-                >
-                  {a.role}
-                </span>
-
-                <p className="text-[#e0e0e0] text-xs font-semibold tracking-[-0.01em] mb-1 leading-snug">{a.name}</p>
-                <p className="text-[#444] text-xs leading-[1.6] mb-2">{a.detail}</p>
-                <span className="label" style={{ color: "rgba(255,255,255,0.1)" }}>{a.location}</span>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
       </motion.div>
     </section>

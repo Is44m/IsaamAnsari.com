@@ -50,7 +50,7 @@ export default function Arc() {
   const inView = useInView(ref, { once: true, margin: "-15%" });
 
   return (
-    <section ref={ref} className="section-padding relative">
+    <section ref={ref} className="section-padding relative dot-grid">
       <span className="rule block mb-16" />
 
       <motion.span

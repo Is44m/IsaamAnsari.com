@@ -105,14 +105,15 @@ body::after {
   height: 100dvh;
 }
 
-/* Marquee */
+/* Marquee — translate3d forces GPU compositing, eliminating the loop seam */
 @keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
 }
 .marquee-track {
   animation: marquee 35s linear infinite;
   will-change: transform;
+  backface-visibility: hidden;
 }
 .marquee-track:hover {
   animation-play-state: paused;
@@ -125,6 +126,12 @@ body::after {
 }
 .pulse-dot {
   animation: pulse-dot 2s ease-in-out infinite;
+}
+
+/* Subtle dot grid — used as section background texture */
+.dot-grid {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+  background-size: 28px 28px;
 }
 
 /* Photo placeholder crosshair */

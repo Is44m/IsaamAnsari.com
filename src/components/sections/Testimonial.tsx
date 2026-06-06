@@ -1,7 +1,9 @@
 "use client";
 
-import { useRef, useEffect, useCallback } from "react";
+import { useRef, useCallback } from "react";
 import { motion, useInView } from "framer-motion";
+import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
 import NavButton from "@/components/ui/NavButton";
 
 const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
@@ -17,20 +19,19 @@ const testimonials = [
   // Add more testimonials here
 ];
 
-const CARD_W = 400;
-const GAP = 16;
-const SPEED = 0.4;
-
 function TestimonialCard({ t }: Readonly<{ t: typeof testimonials[0] }>) {
   return (
     <div
-      className="flex-shrink-0 flex flex-col justify-between"
       style={{
-        width: `min(${CARD_W}px, 85vw)`,
+        flex: "0 0 clamp(300px, 85vw, 420px)",
+        minWidth: 0,
         padding: "clamp(1.25rem,2.5vw,1.75rem)",
         background: "rgba(255,255,255,0.025)",
         border: "1px solid rgba(255,255,255,0.06)",
         borderRadius: "8px",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
       }}
     >
       <div>
@@ -63,39 +64,17 @@ function TestimonialCard({ t }: Readonly<{ t: typeof testimonials[0] }>) {
 
 export default function Testimonial() {
   const ref = useRef<HTMLElement>(null);
-  const scrollRef = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-10%" });
-  const raf = useRef<number>(0);
 
   const isMultiple = testimonials.length > 1;
 
-  const animate = useCallback(() => {
-    const el = scrollRef.current;
-    if (el) {
-      el.scrollLeft += SPEED;
-      if (el.scrollLeft >= el.scrollWidth / 2) {
-        el.scrollLeft -= el.scrollWidth / 2;
-      }
-    }
-    raf.current = requestAnimationFrame(animate);
-  }, []);
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    { loop: true, align: "start" },
+    [Autoplay({ delay: 5000, stopOnInteraction: false, stopOnMouseEnter: true })]
+  );
 
-  useEffect(() => {
-    if (!isMultiple) return;
-    raf.current = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(raf.current);
-  }, [isMultiple, animate]);
-
-  const scroll = (dir: 1 | -1) => {
-    const el = scrollRef.current;
-    if (!el) return;
-    const half = el.scrollWidth / 2;
-    el.scrollLeft += dir * (CARD_W + GAP);
-    if (el.scrollLeft >= half) el.scrollLeft -= half;
-    if (el.scrollLeft < 0) el.scrollLeft += half;
-  };
-
-  const doubled = [...testimonials, ...testimonials];
+  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
 
   return (
     <section
@@ -124,8 +103,8 @@ export default function Testimonial() {
             animate={inView ? { opacity: 1 } : {}}
             transition={{ duration: 0.5, delay: 0.3 }}
           >
-            <NavButton direction="left"  disabled={false} onClick={() => scroll(-1)} />
-            <NavButton direction="right" disabled={false} onClick={() => scroll(1)}  />
+            <NavButton direction="left"  disabled={false} onClick={scrollPrev} />
+            <NavButton direction="right" disabled={false} onClick={scrollNext} />
           </motion.div>
         )}
       </div>
@@ -136,19 +115,19 @@ export default function Testimonial() {
         transition={{ duration: 0.7, delay: 0.2 }}
       >
         {isMultiple ? (
-          <div className="relative overflow-hidden">
+          <div className="relative">
             <div className="absolute left-0 top-0 bottom-0 w-10 z-10 pointer-events-none"
               style={{ background: "linear-gradient(to right, #0a0a0a, transparent)" }} />
             <div className="absolute right-0 top-0 bottom-0 w-10 z-10 pointer-events-none"
               style={{ background: "linear-gradient(to left, #0a0a0a, transparent)" }} />
-            <div
-              ref={scrollRef}
-              className="flex gap-4 overflow-x-auto pb-2"
-              style={{ padding: "0 clamp(1.5rem,6vw,6rem)", scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
-            >
-              {doubled.map((t, i) => (
-                <TestimonialCard key={`${t.name}-${i}`} t={t} />
-              ))}
+
+            {/* Embla viewport */}
+            <div ref={emblaRef} style={{ overflow: "hidden", padding: "0 clamp(1.5rem,6vw,6rem)" }}>
+              <div style={{ display: "flex", gap: "16px" }}>
+                {testimonials.map((t) => (
+                  <TestimonialCard key={t.name} t={t} />
+                ))}
+              </div>
             </div>
           </div>
         ) : (

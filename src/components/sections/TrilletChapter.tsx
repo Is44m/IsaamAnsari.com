@@ -44,7 +44,7 @@ export default function TrilletChapter() {
   return (
     <div ref={containerRef} style={{ height: "240vh" }}>
       <div
-        className="sticky top-0 h-screen-safe flex flex-col justify-center overflow-hidden"
+        className="sticky top-0 h-screen-safe flex flex-col justify-center overflow-hidden dot-grid"
         style={{ background: "#060608" }}
       >
         <div
