@@ -119,26 +119,34 @@ export default function StagesStrip() {
         </motion.span>
       </div>
 
-      {/* Scrollable cards row */}
-      <div
-        className="flex gap-3 overflow-x-auto pb-4"
-        style={{
-          padding: "0 clamp(1.5rem,6vw,6rem)",
-          scrollSnapType: "x mandatory",
-          WebkitOverflowScrolling: "touch",
-          scrollbarWidth: "none",
-        }}
+      {/* Auto-scrolling cards */}
+      <motion.div
+        className="relative overflow-hidden"
+        initial={{ opacity: 0 }}
+        animate={inView ? { opacity: 1 } : {}}
+        transition={{ duration: 0.8, delay: 0.2 }}
       >
-        {appearances.map((a, i) => {
+        {/* Edge fades */}
+        <div className="absolute left-0 top-0 bottom-0 w-16 z-10 pointer-events-none"
+          style={{ background: "linear-gradient(to right, #080808, transparent)" }} />
+        <div className="absolute right-0 top-0 bottom-0 w-16 z-10 pointer-events-none"
+          style={{ background: "linear-gradient(to left, #080808, transparent)" }} />
+
+        <div
+          className="marquee-track flex gap-3 pb-2"
+          style={{
+            animationDuration: `${appearances.length * 8}s`,
+            width: "max-content",
+            paddingLeft: "clamp(1.5rem,6vw,6rem)",
+          }}
+        >
+        {[...appearances, ...appearances].map((a, i) => {
           const rs = roleStyles[a.role];
           return (
-            <motion.div
-              key={a.name}
+            <div
+              key={`${a.name}-${i}`}
               className="flex-shrink-0 flex flex-col"
-              style={{ width: "clamp(200px,24vw,270px)", scrollSnapAlign: "start" }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, ease, delay: 0.05 + i * 0.06 }}
+              style={{ width: "clamp(200px,24vw,260px)" }}
             >
               {/* Photo placeholder */}
               <div
@@ -183,10 +191,11 @@ export default function StagesStrip() {
               <span className="label" style={{ color: "rgba(255,255,255,0.1)" }}>
                 {a.location}
               </span>
-            </motion.div>
+            </div>
           );
         })}
-      </div>
+        </div>
+      </motion.div>
     </section>
   );
 }
