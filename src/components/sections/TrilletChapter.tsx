@@ -68,9 +68,8 @@ export default function TrilletChapter() {
               className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded border"
               style={{ borderColor: "rgba(99,102,241,0.15)", background: "rgba(99,102,241,0.04)" }}
             >
-              {/* Replace src with actual logo */}
-              {/* <img src="/logos/trillet-ai.svg" alt="Trillet AI" className="h-4 w-auto" /> */}
-              <span className="text-xs text-[#444] tracking-[0.12em] font-medium uppercase">[ TRILLET AI LOGO ]</span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/Trillet-logo.png" alt="Trillet AI" style={{ height: "16px", width: "auto", objectFit: "contain", filter: "brightness(0) invert(1)", opacity: 0.6 }} />
             </div>
           </div>
 
@@ -137,7 +136,7 @@ export default function TrilletChapter() {
           {/* Google Cloud citation */}
           <div ref={citationRef} className="opacity-0">
             <a
-              href="https://cloud.google.com" /* Replace with actual article URL */
+              href="https://cloud.google.com/customers/trilletai"
               target="_blank"
               rel="noopener noreferrer"
               data-cursor-hover

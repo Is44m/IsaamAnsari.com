@@ -71,9 +71,8 @@ export default function VectorChapter() {
               className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded border"
               style={{ borderColor: "rgba(255,255,255,0.08)", background: "rgba(255,255,255,0.02)" }}
             >
-              {/* Replace src with actual logo */}
-              {/* <img src="/logos/vector-ai.svg" alt="VECTOR AI" className="h-4 w-auto" /> */}
-              <span className="text-xs text-[#444] tracking-[0.12em] font-medium uppercase">[ VECTOR AI LOGO ]</span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/VECTOR-Logo.png" alt="VECTOR AI" style={{ height: "16px", width: "auto", objectFit: "contain", filter: "brightness(0) invert(1)", opacity: 0.55 }} />
             </div>
           </div>
 

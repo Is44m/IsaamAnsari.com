@@ -3,6 +3,7 @@ import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import CustomCursor from "@/components/cursor/CustomCursor";
 import SmoothScroll from "@/components/smooth-scroll/SmoothScroll";
+import ScrollProgress from "@/components/ui/ScrollProgress";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -131,6 +132,7 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <ScrollProgress />
         <SmoothScroll>
           <CustomCursor />
           {children}

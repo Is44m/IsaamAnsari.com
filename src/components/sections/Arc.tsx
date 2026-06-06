@@ -26,7 +26,7 @@ function Counter({ target, suffix = "" }: { target: number; suffix?: string }) {
     return () => cancelAnimationFrame(frame);
   }, [inView, target]);
 
-  return <span ref={ref}>{count}{suffix}</span>;
+  return <span ref={ref}>{count}{count > 0 ? suffix : ""}</span>;
 }
 
 const stats = [

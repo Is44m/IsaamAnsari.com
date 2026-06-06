@@ -49,9 +49,12 @@ export default function Contact() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.8, ease, delay: 0.35 }}
           >
-            <p className="text-[#555] text-sm leading-[1.7] mb-5 max-w-[340px]">
-              Have a project, role, or idea worth talking about? Book a session
-              directly.
+            <p className="text-[#555] text-sm leading-[1.7] mb-1 max-w-[340px]">
+              Curious about what voice AI could do for your business?
+            </p>
+            <p className="text-[#3a3a3a] text-xs leading-[1.7] mb-5 max-w-[340px]">
+              Book a 30-min discovery call to explore how Trillet AI can
+              automate and scale your customer conversations.
             </p>
             <a
               href="https://cal.com/isaama"
@@ -73,7 +76,7 @@ export default function Contact() {
                 e.currentTarget.style.borderColor = "rgba(99,102,241,0.25)";
               }}
             >
-              <span className="text-sm font-medium tracking-wide">Book a session</span>
+              <span className="text-sm font-medium tracking-wide">Book a discovery call</span>
               <svg
                 className="w-3.5 h-3.5 -translate-x-0.5 group-hover:translate-x-0.5 transition-transform duration-200"
                 fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}

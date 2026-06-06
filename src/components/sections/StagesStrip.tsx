@@ -8,7 +8,7 @@ const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
 const stages = [
   {
     name: "GDG DevFest AI",
-    detail: "Presented VECTOR AI's V-Fit — first public look",
+    detail: "Presented VECTOR AI's V-Fit - first public look",
     location: "Islamabad, Pakistan",
     year: "2023",
   },
@@ -37,7 +37,13 @@ export default function StagesStrip() {
   const inView = useInView(ref, { once: true, margin: "-10%" });
 
   return (
-    <section ref={ref} style={{ padding: "clamp(4rem,8vw,7rem) 0" }}>
+    <section
+      ref={ref}
+      style={{
+        padding: "clamp(4rem,8vw,7rem) 0",
+        borderTop: "1px solid rgba(255,255,255,0.04)",
+      }}
+    >
       {/* Header */}
       <div
         className="flex items-end justify-between mb-10"
@@ -50,7 +56,7 @@ export default function StagesStrip() {
         >
           <span className="label block mb-2">On stage</span>
           <p className="text-[#f0f0f0] text-[clamp(1.1rem,2vw,1.5rem)] font-semibold tracking-[-0.02em]">
-            Representing on the big stage
+            Representing on the world stage
           </p>
         </motion.div>
         <motion.span

@@ -105,25 +105,24 @@ export default function Hero() {
           transition={{ duration: 1, ease, delay: 0.7 }}
         >
           <div
-            className="photo-placeholder relative"
+            className="relative overflow-hidden flex-shrink-0"
             style={{
               width: "clamp(140px, 14vw, 200px)",
               aspectRatio: "3/4",
-              background: "rgba(99,102,241,0.04)",
-              border: "1px dashed rgba(99,102,241,0.2)",
-              borderRadius: "2px",
+              borderRadius: "8px",
+              border: "1px solid rgba(255,255,255,0.07)",
             }}
           >
-            {/* Swap this div for <img src="/photo.jpg" ... /> when ready */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-2">
-              <span className="label text-center" style={{ color: "rgba(99,102,241,0.3)", letterSpacing: "0.2em" }}>
-                PHOTO
-              </span>
-            </div>
-            {/* Indigo bottom accent line */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/Headshot.png"
+              alt="Isaam Ansari"
+              style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top", display: "block" }}
+            />
+            {/* Indigo bottom accent */}
             <div
               className="absolute bottom-0 left-0 right-0 h-[2px]"
-              style={{ background: "linear-gradient(to right, transparent, rgba(99,102,241,0.4), transparent)" }}
+              style={{ background: "linear-gradient(to right, transparent, rgba(99,102,241,0.5), transparent)" }}
             />
           </div>
         </motion.div>
