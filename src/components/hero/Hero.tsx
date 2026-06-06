@@ -29,29 +29,32 @@ type CraftItem =
   | { kind: "img";  src: string;   name: string };
 
 const craftStack: CraftItem[] = [
-  { kind: "icon", Icon: SiTypescript,  name: "TypeScript"    },
-  { kind: "icon", Icon: SiReact,       name: "React"         },
-  { kind: "icon", Icon: SiNextdotjs,   name: "Next.js"       },
-  { kind: "icon", Icon: SiNodedotjs,   name: "Node.js"       },
-  { kind: "icon", Icon: SiFastify,     name: "Fastify"       },
-  { kind: "icon", Icon: SiPython,      name: "Python"        },
-  { kind: "icon", Icon: SiMongodb,     name: "MongoDB"       },
-  { kind: "icon", Icon: SiRedis,       name: "Redis"         },
-  { kind: "icon", Icon: SiDocker,      name: "Docker"        },
-  { kind: "icon", Icon: SiGooglecloud, name: "Google Cloud"  },
+  // Tier 1 — AI & Voice (appears first on load)
   { kind: "icon", Icon: SiLivekit,     name: "LiveKit"       },
-  { kind: "icon", Icon: SiDatadog,     name: "Datadog"       },
-  { kind: "icon", Icon: SiOpenai,      name: "OpenAI"        },
   { kind: "icon", Icon: SiAnthropic,   name: "Anthropic"     },
+  { kind: "icon", Icon: SiOpenai,      name: "OpenAI"        },
   { kind: "icon", Icon: SiLangchain,   name: "LangChain"     },
-  { kind: "icon", Icon: SiTwilio,      name: "Twilio"        },
+  // Tier 2 — Infrastructure & Observability
+  { kind: "icon", Icon: SiDatadog,     name: "Datadog"       },
+  { kind: "icon", Icon: SiDocker,      name: "Docker"        },
   { kind: "img",  src: "/aws.svg",     name: "AWS"           },
+  { kind: "icon", Icon: SiGooglecloud, name: "Google Cloud"  },
+  { kind: "img",  src: "/northflank.svg", name: "Northflank" },
+  { kind: "icon", Icon: SiRedis,       name: "Redis"         },
+  // Tier 3 — Integrations & Platform
+  { kind: "icon", Icon: SiTwilio,      name: "Twilio"        },
   { kind: "img",  src: "/telnyx.svg",  name: "Telnyx"        },
   { kind: "img",  src: "/inngest.svg", name: "Inngest"       },
-  // Drop northflank.svg into /public when ready
-  { kind: "img",  src: "/northflank.svg", name: "Northflank" },
   { kind: "icon", Icon: SiStripe,      name: "Stripe"        },
   { kind: "icon", Icon: SiAuth0,       name: "Auth0"         },
+  // Tier 4 — Core Engineering
+  { kind: "icon", Icon: SiTypescript,  name: "TypeScript"    },
+  { kind: "icon", Icon: SiNodedotjs,   name: "Node.js"       },
+  { kind: "icon", Icon: SiPython,      name: "Python"        },
+  { kind: "icon", Icon: SiNextdotjs,   name: "Next.js"       },
+  { kind: "icon", Icon: SiFastify,     name: "Fastify"       },
+  { kind: "icon", Icon: SiMongodb,     name: "MongoDB"       },
+  { kind: "icon", Icon: SiReact,       name: "React"         },
   { kind: "icon", Icon: SiVercel,      name: "Vercel"        },
   { kind: "icon", Icon: SiTailwindcss, name: "Tailwind"      },
 ];

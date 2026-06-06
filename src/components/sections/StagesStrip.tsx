@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useEffect, useCallback } from "react";
+import { useRef, useEffect, useCallback } from "react";
 import { motion, useInView } from "framer-motion";
 import NavButton from "@/components/ui/NavButton";
 
@@ -30,35 +30,41 @@ const appearances = [
 
 const CARD_W = 260;
 const GAP = 12;
-const SCROLL_BY = CARD_W + GAP;
+const SPEED = 0.6; // px per frame
 
 export default function StagesStrip() {
   const ref = useRef<HTMLElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-10%" });
-  const [atStart, setAtStart] = useState(true);
-  const [atEnd, setAtEnd] = useState(false);
+  const raf = useRef<number>(0);
 
-  const updateScrollState = useCallback(() => {
+  const animate = useCallback(() => {
     const el = scrollRef.current;
-    if (!el) return;
-    setAtStart(el.scrollLeft <= 2);
-    setAtEnd(el.scrollLeft + el.clientWidth >= el.scrollWidth - 2);
+    if (el) {
+      el.scrollLeft += SPEED;
+      if (el.scrollLeft >= el.scrollWidth / 2) {
+        el.scrollLeft -= el.scrollWidth / 2;
+      }
+    }
+    raf.current = requestAnimationFrame(animate);
   }, []);
 
   useEffect(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-    updateScrollState();
-    el.addEventListener("scroll", updateScrollState, { passive: true });
-    const ro = new ResizeObserver(updateScrollState);
-    ro.observe(el);
-    return () => { el.removeEventListener("scroll", updateScrollState); ro.disconnect(); };
-  }, [updateScrollState]);
+    raf.current = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(raf.current);
+  }, [animate]);
 
   const scroll = (dir: 1 | -1) => {
-    scrollRef.current?.scrollBy({ left: dir * SCROLL_BY, behavior: "smooth" });
+    const el = scrollRef.current;
+    if (!el) return;
+    el.scrollLeft += dir * (CARD_W + GAP);
+    // Keep within bounds of doubled list
+    const half = el.scrollWidth / 2;
+    if (el.scrollLeft >= half) el.scrollLeft -= half;
+    if (el.scrollLeft < 0) el.scrollLeft += half;
   };
+
+  const doubled = [...appearances, ...appearances];
 
   return (
     <section
@@ -81,48 +87,46 @@ export default function StagesStrip() {
           </p>
         </motion.div>
 
-        {/* Nav arrows — always visible for 9 items */}
         <motion.div
           className="flex items-center gap-2"
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          <NavButton direction="left"  disabled={atStart} onClick={() => scroll(-1)} />
-          <NavButton direction="right" disabled={atEnd}   onClick={() => scroll(1)}  />
+          <NavButton direction="left"  disabled={false} onClick={() => scroll(-1)} />
+          <NavButton direction="right" disabled={false} onClick={() => scroll(1)}  />
         </motion.div>
       </div>
 
       {/* Scroll container */}
-      <div className="relative">
-        {/* Edge fades */}
+      <motion.div
+        className="relative overflow-hidden"
+        initial={{ opacity: 0 }}
+        animate={inView ? { opacity: 1 } : {}}
+        transition={{ duration: 0.7, delay: 0.15 }}
+      >
         <div className="absolute left-0 top-0 bottom-0 w-10 z-10 pointer-events-none"
           style={{ background: "linear-gradient(to right, #080808, transparent)" }} />
         <div className="absolute right-0 top-0 bottom-0 w-10 z-10 pointer-events-none"
           style={{ background: "linear-gradient(to left, #080808, transparent)" }} />
 
-        <motion.div
+        <div
           ref={scrollRef}
           className="flex gap-3 overflow-x-auto pb-2"
           style={{
             padding: "0 clamp(1.5rem,6vw,6rem)",
-            scrollSnapType: "x mandatory",
             scrollbarWidth: "none",
             WebkitOverflowScrolling: "touch",
           }}
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.7, delay: 0.15 }}
         >
-          {appearances.map((a) => {
+          {doubled.map((a, i) => {
             const rs = roleStyles[a.role];
             return (
               <div
-                key={a.name}
+                key={`${a.name}-${i}`}
                 className="flex-shrink-0 flex flex-col"
-                style={{ width: `${CARD_W}px`, scrollSnapAlign: "start" }}
+                style={{ width: `${CARD_W}px` }}
               >
-                {/* Photo placeholder */}
                 <div
                   className="photo-placeholder w-full mb-3 relative"
                   style={{ aspectRatio: "16/10", background: "rgba(255,255,255,0.02)", border: "1px dashed rgba(255,255,255,0.06)", borderRadius: "4px" }}
@@ -130,10 +134,8 @@ export default function StagesStrip() {
                   <div className="absolute inset-0 flex items-center justify-center">
                     <span className="label" style={{ color: "rgba(255,255,255,0.07)", letterSpacing: "0.18em" }}>IMAGE</span>
                   </div>
-                  <div
-                    className="absolute top-2 right-2 px-2 py-0.5 rounded"
-                    style={{ background: "rgba(8,8,8,0.85)", border: "1px solid rgba(255,255,255,0.06)" }}
-                  >
+                  <div className="absolute top-2 right-2 px-2 py-0.5 rounded"
+                    style={{ background: "rgba(8,8,8,0.85)", border: "1px solid rgba(255,255,255,0.06)" }}>
                     <span className="label" style={{ color: "rgba(255,255,255,0.25)", letterSpacing: "0.1em" }}>{a.year}</span>
                   </div>
                 </div>
@@ -151,8 +153,8 @@ export default function StagesStrip() {
               </div>
             );
           })}
-        </motion.div>
-      </div>
+        </div>
+      </motion.div>
     </section>
   );
 }
