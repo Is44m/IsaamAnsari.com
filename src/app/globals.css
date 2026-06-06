@@ -130,7 +130,7 @@ body::after {
 
 /* Subtle dot grid — used as section background texture */
 .dot-grid {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(99, 102, 241, 0.18) 1px, transparent 1px);
   background-size: 28px 28px;
 }
 
