@@ -1,7 +1,8 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import { motion, useInView } from "framer-motion";
+import NavButton from "@/components/ui/NavButton";
 
 const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
@@ -16,86 +17,57 @@ const roleStyles: Record<Role, { color: string; bg: string; border: string }> = 
 };
 
 const appearances = [
-  {
-    name: "GDG DevFest AI",
-    detail: "Presented VECTOR AI's V-Fit - first public look at the product",
-    location: "Islamabad, Pakistan",
-    year: "2023",
-    role: "SPEAKER" as Role,
-  },
-  {
-    name: "NUST",
-    detail: "Representing VECTOR AI at the national stage",
-    location: "Islamabad, Pakistan",
-    year: "2023",
-    role: "SPEAKER" as Role,
-  },
-  {
-    name: "Future Fest",
-    detail: "Representing VECTOR AI",
-    location: "Islamabad, Pakistan",
-    year: "2024",
-    role: "SPEAKER" as Role,
-  },
-  {
-    name: "Huawei Seeds for the Future",
-    detail: "Representing Pakistan - Tech4Good competition",
-    location: "Tashkent, Uzbekistan",
-    year: "2024",
-    role: "DELEGATE" as Role,
-  },
-  {
-    name: "NASTP Alpha",
-    detail: "Technical workshop on Trillet AI and voice automation",
-    location: "Pakistan",
-    year: "2024",
-    role: "WORKSHOP" as Role,
-  },
-  {
-    name: "GDGoC GIKI",
-    detail: "Voice AI workshop on Trillet, on invitation of GDGoC GIKI",
-    location: "GIKI, Pakistan",
-    year: "2025",
-    role: "WORKSHOP" as Role,
-  },
-  {
-    name: "GDGoC Bahria University",
-    detail: "Voice AI workshop, on invitation of GDGoC Bahria University",
-    location: "Islamabad, Pakistan",
-    year: "2025",
-    role: "WORKSHOP" as Role,
-  },
-  {
-    name: "Trillet Voice AI Hackathon",
-    detail: "Judge at the first Trillet-sponsored Voice AI Hackathon",
-    location: "FAST Peshawar, Pakistan",
-    year: "2025",
-    role: "JUDGE" as Role,
-  },
-  {
-    name: "NaSCon '25",
-    detail: "Panel moderator for the AI track at the National Solutions Convention",
-    location: "FAST NUCES Islamabad, Pakistan",
-    year: "2025",
-    role: "MODERATOR" as Role,
-  },
+  { name: "GDG DevFest AI", detail: "Presented VECTOR AI's V-Fit - first public look at the product", location: "Islamabad, Pakistan", year: "2023", role: "SPEAKER" as Role },
+  { name: "NUST", detail: "Representing VECTOR AI at the national stage", location: "Islamabad, Pakistan", year: "2023", role: "SPEAKER" as Role },
+  { name: "Future Fest", detail: "Representing VECTOR AI", location: "Islamabad, Pakistan", year: "2024", role: "SPEAKER" as Role },
+  { name: "Huawei Seeds for the Future", detail: "Representing Pakistan - Tech4Good competition", location: "Tashkent, Uzbekistan", year: "2024", role: "DELEGATE" as Role },
+  { name: "NASTP Alpha", detail: "Technical workshop on Trillet AI and voice automation", location: "Pakistan", year: "2024", role: "WORKSHOP" as Role },
+  { name: "GDGoC GIKI", detail: "Voice AI workshop on Trillet, on invitation of GDGoC GIKI", location: "GIKI, Pakistan", year: "2025", role: "WORKSHOP" as Role },
+  { name: "GDGoC Bahria University", detail: "Voice AI workshop, on invitation of GDGoC Bahria University", location: "Islamabad, Pakistan", year: "2025", role: "WORKSHOP" as Role },
+  { name: "Trillet Voice AI Hackathon", detail: "Judge at the first Trillet-sponsored Voice AI Hackathon", location: "FAST Peshawar, Pakistan", year: "2025", role: "JUDGE" as Role },
+  { name: "NaSCon '25", detail: "Panel moderator for the AI track at the National Solutions Convention", location: "FAST NUCES Islamabad, Pakistan", year: "2025", role: "MODERATOR" as Role },
 ];
+
+const CARD_W = 260;
+const GAP = 12;
+const SCROLL_BY = CARD_W + GAP;
 
 export default function StagesStrip() {
   const ref = useRef<HTMLElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-10%" });
+  const [atStart, setAtStart] = useState(true);
+  const [atEnd, setAtEnd] = useState(false);
+
+  const updateScrollState = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    setAtStart(el.scrollLeft <= 2);
+    setAtEnd(el.scrollLeft + el.clientWidth >= el.scrollWidth - 2);
+  }, []);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    updateScrollState();
+    el.addEventListener("scroll", updateScrollState, { passive: true });
+    const ro = new ResizeObserver(updateScrollState);
+    ro.observe(el);
+    return () => { el.removeEventListener("scroll", updateScrollState); ro.disconnect(); };
+  }, [updateScrollState]);
+
+  const scroll = (dir: 1 | -1) => {
+    scrollRef.current?.scrollBy({ left: dir * SCROLL_BY, behavior: "smooth" });
+  };
 
   return (
     <section
       ref={ref}
-      style={{
-        padding: "clamp(4rem,8vw,7rem) 0",
-        borderTop: "1px solid rgba(255,255,255,0.04)",
-      }}
+      style={{ padding: "clamp(4rem,8vw,7rem) 0", borderTop: "1px solid rgba(255,255,255,0.04)" }}
     >
       {/* Header */}
       <div
-        className="flex items-end justify-between mb-10"
+        className="flex items-end justify-between mb-8"
         style={{ padding: "0 clamp(1.5rem,6vw,6rem)" }}
       >
         <motion.div
@@ -108,94 +80,79 @@ export default function StagesStrip() {
             Events &amp; appearances
           </p>
         </motion.div>
-        <motion.span
-          className="label hidden sm:block"
+
+        {/* Nav arrows — always visible for 9 items */}
+        <motion.div
+          className="flex items-center gap-2"
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          style={{ color: "rgba(255,255,255,0.12)" }}
+          transition={{ duration: 0.5, delay: 0.3 }}
         >
-          {appearances.length} appearances
-        </motion.span>
+          <NavButton direction="left"  disabled={atStart} onClick={() => scroll(-1)} />
+          <NavButton direction="right" disabled={atEnd}   onClick={() => scroll(1)}  />
+        </motion.div>
       </div>
 
-      {/* Auto-scrolling cards */}
-      <motion.div
-        className="relative overflow-hidden"
-        initial={{ opacity: 0 }}
-        animate={inView ? { opacity: 1 } : {}}
-        transition={{ duration: 0.8, delay: 0.2 }}
-      >
+      {/* Scroll container */}
+      <div className="relative">
         {/* Edge fades */}
-        <div className="absolute left-0 top-0 bottom-0 w-16 z-10 pointer-events-none"
+        <div className="absolute left-0 top-0 bottom-0 w-10 z-10 pointer-events-none"
           style={{ background: "linear-gradient(to right, #080808, transparent)" }} />
-        <div className="absolute right-0 top-0 bottom-0 w-16 z-10 pointer-events-none"
+        <div className="absolute right-0 top-0 bottom-0 w-10 z-10 pointer-events-none"
           style={{ background: "linear-gradient(to left, #080808, transparent)" }} />
 
-        <div
-          className="marquee-track flex gap-3 pb-2"
+        <motion.div
+          ref={scrollRef}
+          className="flex gap-3 overflow-x-auto pb-2"
           style={{
-            animationDuration: `${appearances.length * 8}s`,
-            width: "max-content",
-            paddingLeft: "clamp(1.5rem,6vw,6rem)",
+            padding: "0 clamp(1.5rem,6vw,6rem)",
+            scrollSnapType: "x mandatory",
+            scrollbarWidth: "none",
+            WebkitOverflowScrolling: "touch",
           }}
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.7, delay: 0.15 }}
         >
-        {[...appearances, ...appearances].map((a, i) => {
-          const rs = roleStyles[a.role];
-          return (
-            <div
-              key={`${a.name}-${i}`}
-              className="flex-shrink-0 flex flex-col"
-              style={{ width: "clamp(200px,24vw,260px)" }}
-            >
-              {/* Photo placeholder */}
+          {appearances.map((a) => {
+            const rs = roleStyles[a.role];
+            return (
               <div
-                className="photo-placeholder w-full mb-3 relative"
-                style={{
-                  aspectRatio: "16/10",
-                  background: "rgba(255,255,255,0.02)",
-                  border: "1px dashed rgba(255,255,255,0.06)",
-                  borderRadius: "4px",
-                }}
+                key={a.name}
+                className="flex-shrink-0 flex flex-col"
+                style={{ width: `${CARD_W}px`, scrollSnapAlign: "start" }}
               >
-                {/* Replace with <img src={a.image} alt={a.name} className="w-full h-full object-cover rounded" /> */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="label" style={{ color: "rgba(255,255,255,0.07)", letterSpacing: "0.18em" }}>
-                    IMAGE
-                  </span>
-                </div>
-                {/* Year badge */}
+                {/* Photo placeholder */}
                 <div
-                  className="absolute top-2 right-2 px-2 py-0.5 rounded"
-                  style={{ background: "rgba(8,8,8,0.85)", border: "1px solid rgba(255,255,255,0.06)" }}
+                  className="photo-placeholder w-full mb-3 relative"
+                  style={{ aspectRatio: "16/10", background: "rgba(255,255,255,0.02)", border: "1px dashed rgba(255,255,255,0.06)", borderRadius: "4px" }}
                 >
-                  <span className="label" style={{ color: "rgba(255,255,255,0.25)", letterSpacing: "0.1em" }}>
-                    {a.year}
-                  </span>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="label" style={{ color: "rgba(255,255,255,0.07)", letterSpacing: "0.18em" }}>IMAGE</span>
+                  </div>
+                  <div
+                    className="absolute top-2 right-2 px-2 py-0.5 rounded"
+                    style={{ background: "rgba(8,8,8,0.85)", border: "1px solid rgba(255,255,255,0.06)" }}
+                  >
+                    <span className="label" style={{ color: "rgba(255,255,255,0.25)", letterSpacing: "0.1em" }}>{a.year}</span>
+                  </div>
                 </div>
+
+                <span
+                  className="self-start px-2 py-0.5 rounded-full mb-2 text-[0.6rem] font-semibold tracking-[0.1em]"
+                  style={{ color: rs.color, background: rs.bg, border: `1px solid ${rs.border}` }}
+                >
+                  {a.role}
+                </span>
+
+                <p className="text-[#e0e0e0] text-xs font-semibold tracking-[-0.01em] mb-1 leading-snug">{a.name}</p>
+                <p className="text-[#444] text-xs leading-[1.6] mb-2">{a.detail}</p>
+                <span className="label" style={{ color: "rgba(255,255,255,0.1)" }}>{a.location}</span>
               </div>
-
-              {/* Role tag */}
-              <span
-                className="self-start px-2 py-0.5 rounded-full mb-2 text-[0.6rem] font-semibold tracking-[0.1em]"
-                style={{ color: rs.color, background: rs.bg, border: `1px solid ${rs.border}` }}
-              >
-                {a.role}
-              </span>
-
-              {/* Info */}
-              <p className="text-[#e0e0e0] text-xs font-semibold tracking-[-0.01em] mb-1 leading-snug">
-                {a.name}
-              </p>
-              <p className="text-[#444] text-xs leading-[1.6] mb-2">{a.detail}</p>
-              <span className="label" style={{ color: "rgba(255,255,255,0.1)" }}>
-                {a.location}
-              </span>
-            </div>
-          );
-        })}
-        </div>
-      </motion.div>
+            );
+          })}
+        </motion.div>
+      </div>
     </section>
   );
 }
