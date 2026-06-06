@@ -51,8 +51,7 @@ export default function Hero() {
       >
         <span className="label">Abu Dhabi, UAE</span>
         <span className="label flex items-center gap-2">
-          <span className="pulse-dot inline-block w-1.5 h-1.5 rounded-full bg-[#6366f1]" />
-          Building @ Trillet AI
+          <span className="pulse-dot inline-block w-1.5 h-1.5 rounded-full bg-[#6366f1]" />{"Building @ Trillet AI"}
         </span>
       </motion.div>
 
@@ -97,9 +96,9 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        {/* Right: photo placeholder — hidden on mobile */}
+        {/* Right: headshot — hidden on small phones, visible md+ */}
         <motion.div
-          className="hidden lg:block flex-shrink-0"
+          className="hidden md:block flex-shrink-0"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease, delay: 0.7 }}

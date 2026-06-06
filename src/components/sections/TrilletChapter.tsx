@@ -44,10 +44,9 @@ export default function TrilletChapter() {
   return (
     <div ref={containerRef} style={{ height: "240vh" }}>
       <div
-        className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden"
+        className="sticky top-0 h-screen-safe flex flex-col justify-center overflow-hidden"
         style={{ background: "#060608" }}
       >
-        {/* Subtle right gradient bar */}
         <div
           className="absolute right-0 top-0 bottom-0 w-[3px]"
           style={{ background: "linear-gradient(to bottom, transparent, rgba(99,102,241,0.25) 50%, transparent)" }}
@@ -57,43 +56,38 @@ export default function TrilletChapter() {
           className="relative z-10 flex flex-col justify-center"
           style={{ padding: "0 clamp(1.5rem,6vw,6rem)", maxWidth: "860px" }}
         >
-          {/* Label */}
-          <span ref={labelRef} className="label block mb-6 opacity-0">
+          <span ref={labelRef} className="label block mb-3 sm:mb-6 opacity-0">
             03 - Trillet AI
           </span>
 
-          {/* Logo placeholder */}
-          <div ref={logoRef} className="mb-6 opacity-0">
+          <div ref={logoRef} className="mb-3 sm:mb-6 opacity-0">
             <div
               className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded border"
               style={{ borderColor: "rgba(99,102,241,0.15)", background: "rgba(99,102,241,0.04)" }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/Trillet-logo.png" alt="Trillet AI" style={{ height: "28px", width: "auto", objectFit: "contain" }} />
+              <img src="/Trillet-logo.png" alt="Trillet AI" style={{ height: "24px", width: "auto", objectFit: "contain" }} />
             </div>
           </div>
 
-          {/* Title */}
           <h2
             ref={titleRef}
-            className="font-bold leading-none tracking-[-0.04em] text-[#f0f0f0] mb-5 opacity-0"
-            style={{ fontSize: "clamp(2.75rem,7.5vw,6rem)" }}
+            className="font-bold leading-[1.05] tracking-[-0.035em] text-[#f0f0f0] mb-3 sm:mb-5 opacity-0"
+            style={{ fontSize: "clamp(1.75rem,7.5vw,6rem)" }}
           >
             Head of
             <br />
             <span className="text-[#6366f1]">Engineering.</span>
           </h2>
 
-          {/* Role progression */}
-          <div ref={progressionRef} className="mb-7 opacity-0">
+          <div ref={progressionRef} className="mb-4 sm:mb-7 opacity-0">
             <div className="flex items-center gap-3 flex-wrap">
               <div className="h-px w-6 bg-[rgba(99,102,241,0.3)]" />
               <span className="text-[#555] text-xs tracking-[0.1em] uppercase font-medium">Nov 2024 - Present</span>
               <span className="text-[#2a2a2a]">·</span>
               <span className="text-[#555] text-xs tracking-[0.1em] uppercase font-medium">Remote · Abu Dhabi</span>
             </div>
-            {/* Transition line */}
-            <div className="flex items-center gap-2.5 mt-2.5 pl-9 flex-wrap">
+            <div className="flex items-center gap-2.5 mt-2 pl-9 flex-wrap">
               <span className="text-[#3a3a3a] text-xs font-medium">Lead Software Engineer</span>
               <span className="text-[#2a2a2a] text-xs">-&gt;</span>
               <span className="text-[#6366f1] text-xs font-semibold tracking-wide">Head of Engineering</span>
@@ -102,10 +96,9 @@ export default function TrilletChapter() {
             </div>
           </div>
 
-          {/* Body */}
           <p
             ref={bodyRef}
-            className="text-[clamp(0.875rem,1.5vw,1.05rem)] text-[#777] leading-[1.8] max-w-[580px] mb-8 opacity-0"
+            className="text-[clamp(0.8125rem,1.5vw,1.05rem)] text-[#777] leading-[1.75] max-w-[580px] mb-4 sm:mb-8 opacity-0"
           >
             Joined as Lead Software Engineer in November 2024, contributing to the
             architecture of an agentic AI communication platform with a voice-first
@@ -115,8 +108,7 @@ export default function TrilletChapter() {
             Voice-first, built to scale, built to last.
           </p>
 
-          {/* Industry tags */}
-          <div ref={tagsRef} className="flex flex-wrap gap-2 mb-7 opacity-0">
+          <div ref={tagsRef} className="flex flex-wrap gap-2 mb-4 sm:mb-7 opacity-0">
             {tags.map((tag) => (
               <span
                 key={tag}
@@ -133,7 +125,6 @@ export default function TrilletChapter() {
             ))}
           </div>
 
-          {/* Google Cloud citation */}
           <div ref={citationRef} className="opacity-0">
             <a
               href="https://cloud.google.com/customers/trilletai"
@@ -142,10 +133,7 @@ export default function TrilletChapter() {
               data-cursor-hover
               className="group inline-flex items-center gap-3 text-[#444] hover:text-[#777] transition-colors duration-300"
             >
-              <span
-                className="text-[0.6rem] tracking-[0.18em] uppercase font-medium"
-                style={{ color: "inherit" }}
-              >
+              <span className="text-[0.6rem] tracking-[0.18em] uppercase font-medium" style={{ color: "inherit" }}>
                 [1]
               </span>
               <span className="text-xs tracking-wide" style={{ color: "inherit" }}>

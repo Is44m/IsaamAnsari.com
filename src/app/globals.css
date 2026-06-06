@@ -99,6 +99,12 @@ body::after {
   color: var(--text-secondary);
 }
 
+/* Viewport height that respects mobile browser chrome (iOS Safari fix) */
+.h-screen-safe {
+  height: 100vh;
+  height: 100dvh;
+}
+
 /* Marquee */
 @keyframes marquee {
   from { transform: translateX(0); }

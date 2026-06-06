@@ -19,7 +19,7 @@ export default function Contact() {
     <section ref={ref} className="section-padding relative">
       <span className="rule block mb-16" />
 
-      <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-12 lg:gap-20">
+      <div className="flex flex-col md:flex-row md:items-start justify-between gap-12 md:gap-20">
         {/* Left: heading + booking CTA */}
         <div className="flex-1">
           <motion.span
@@ -89,7 +89,7 @@ export default function Contact() {
 
         {/* Right: links */}
         <motion.div
-          className="flex flex-col gap-5 lg:pt-[5.5rem]"
+          className="flex flex-col gap-5 md:pt-[5.5rem]"
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.9, ease, delay: 0.3 }}
